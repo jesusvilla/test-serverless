@@ -1,0 +1,46 @@
+service: serverless-boilerplate
+
+custom:
+  # Our stage is based on what is passed in when running serverless
+  # commands. Or falls back to what we have set in the provider section.
+  stage: ${opt:stage, 'offline'}
+  region: ${opt:region, 'us-east-1'}
+  bundle:
+    linting: false
+    excludeFiles: "**/*.test.ts"
+  serverless-offline:
+    httpPort: 3000
+    noPrependStageInUrl: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  memorySize: 512
+  timeout: 10
+  logRetentionInDays: 90
+  logs:
+    httpApi: true
+  httpApi:
+    # metrics: true # Enable if you need
+    cors: true
+
+functions:
+  app:
+    handler: src/modules/card/app.handler
+    # reservedConcurrency: 100
+    events:
+      - httpApi:
+          path: '/tokens'
+          method: 'POST'
+      - httpApi:
+          path: '/cards/{id}'
+          method: 'GET'
+
+# Create an optimized package for our functions 
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle # Package our functions with Webpack
+  - serverless-offline
+  - serverless-dotenv-plugin # Load .env as environment variables
