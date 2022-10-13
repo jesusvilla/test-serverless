@@ -10,7 +10,7 @@ app.validator.addFormats({ email, luhn, expirationYear });
 
 app
   .before(Service.ensureAuthenticated)
-  .post('/tokens', Service.createToken, GetCardById)
-  .get('/cards/{id}', Service.getCardById, CreateToken);
+  .post('/tokens', Service.createToken, CreateToken) // only work with Authorization: Bearer <Hash16Size>
+  .get('/cards/{token}', Service.getCardById, GetCardById); // only work with Authorization: Bearer <Hash16Size>
 
 export const handler = app.run();

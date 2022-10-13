@@ -7,7 +7,7 @@ export const CreateToken = {
   card_number: {
     type: 'string', format: 'luhn', minLength: 13, maxLength: 16, required: true
   },
-  cvv: { type: 'string', minLength: 3, maxLength: 4 },
+  cvv: { type: 'integer', minimum: 100, maximum: 9999 },
   expiration_month: { type: 'integer', minimum: 1, maximum: 12 },
   expiration_year: { type: 'integer', format: 'expirationYear' },
   email: {

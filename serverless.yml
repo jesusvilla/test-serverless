@@ -33,7 +33,7 @@ functions:
           path: '/tokens'
           method: 'POST'
       - httpApi:
-          path: '/cards/{id}'
+          path: '/cards/{token}'
           method: 'GET'
 
 # Create an optimized package for our functions 
