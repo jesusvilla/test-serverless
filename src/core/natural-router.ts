@@ -88,6 +88,7 @@ export default class NaturalRouter {
 
   private route(method: string, path: string, cb: RouterCb, schema?: any) {
     if (schema) {
+      // If the parameter exists then assign a schema validator to the function payload
       cb.validate = this.validator.compile(schema);
     }
     this.routes[`${method} ${path}`] = cb;
